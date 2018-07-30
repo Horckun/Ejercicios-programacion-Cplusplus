@@ -23,8 +23,8 @@ int main(void) {
 	--y; // Ahora a la variable y (1) se le resta 1 antes de utilizar la variable
 	
 	// Imprimiendo en pantalla los resultados
-	printf("x = %i.\n",x);
-	printf("y = %i.\n",y);
+	cout << "x = " << x << endl;
+	cout << "y = " << y << endl;
 	
 	cin.get();
 	
