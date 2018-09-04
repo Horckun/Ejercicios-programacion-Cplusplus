@@ -1,4 +1,4 @@
-// IF
+// IF ELSE
 
 // LIBRERÍA
 #include <iostream>
@@ -17,10 +17,14 @@ int main() {
 	// CONDICIONAL IF
 	if(x >= 0) {
 		cout << "El valor es positivo." << endl;
+	} else {
+		cout << "El valor es negativo." << endl;
 	}
 	
 	if(x >= 0 && x <= 9) {
 		cout << "El valor tiene un digito." << endl;
+	} else {
+		cout << "El valor tiene mas de un digito." << endl;
 	}
 	
 	// CIERRE
