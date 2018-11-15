@@ -10,7 +10,7 @@ int main() {
 	int i;
 	char palabra[10];
 	
-	cout << "Introduce la primera letra de la palabra: ";
+	cout << "Introduce una palabra: ";
 	cin >> palabra;
 	
 	cout << palabra;
