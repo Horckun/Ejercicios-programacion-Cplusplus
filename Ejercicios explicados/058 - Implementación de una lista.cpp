@@ -1,222 +1,298 @@
-// Implementación de una lista
+// Lista
 
-// Librería
+// Librerías
 #include <iostream>
 using namespace std;
 
-// Estructuras
+// Estructura
 struct nodo {
 	int numero;
 	struct nodo *siguiente;
 };
 
-// Declaramos variable de estructura
-struct nodo *principio = NULL;
+// Vaciamos lista al inicio
+struct nodo *inicio = NULL;
 
 // Prototipos
-void insertar_principio(struct nodo *&p);
-void insertar_final(struct nodo *&p);
-void insertar_ordenado(struct nodo *&p);
+void mostrar(nodo *&p);
+void insertarInicio(nodo *&p);
+void insertarFinal(nodo *&p);
+void insertarOrdenado(nodo *&p);
 void borrar(struct nodo *&p);
 void buscar(struct nodo *&p);
-void mostrar(struct nodo *&p);
-void borrar_todo(struct nodo *&p);
+void borrarTodo(struct nodo *&p);
 
 // Función principal
 int main() {
-	/*cout << "--> INSERTAR AL PRINCIPIO <--" << endl << endl;
-	insertar_principio(principio);
-	cout << "--> INSERTAR AL FINAL <--" << endl << endl;
-	insertar_final(principio);
-	cout << "--> INSERTAR ORDENADO <--" << endl << endl;
-	insertar_ordenado(principio);
-	cout << "--> BORRAR <--" << endl << endl;
-	borrar(principio);
-	cout << "--> BUSCAR <--" << endl << endl;
-	buscar(principio);
-	cout << "--> MOSTRAR <--" << endl << endl;
-	mostrar(principio);
-	cout << "--> BORRAR TODO <--" << endl << endl;
-	borrar_todo(principio);*/
-	cout << "--> INSERTAR AL PRINCIPIO <--" << endl << endl;
-	int i;
-	for(i = 0; i < 5; i++) {
-		insertar_ordenado(principio);
-	}
-	cout << "--> MOSTRAR <--" << endl << endl;
-	mostrar(principio);
+	// Variables
+	int opcion;
+	
+	// Menú principal
+	do {
+		do {
+			cout << "\t--> LISTAS <--" << endl;
+			cout << "\t==============" << endl;
+			cout << "\t[1] - Mostrar lista." << endl;
+			cout << "\t[2] - Insertar nodo al inicio." << endl;
+			cout << "\t[3] - Insertar nodo al final." << endl;
+			cout << "\t[4] - Insertar nodo ordenado." << endl;
+			cout << "\t[5] - Eliminar nodo." << endl;
+			cout << "\t[6] - Buscar nodo." << endl;
+			cout << "\t[7] - Borrar todo." << endl << endl;
+			cout << "Opci" << char(162) << "n: ";
+			cin >> opcion;
+			cout << endl;
+			switch(opcion) {
+				case 1: {
+					mostrar(inicio);
+					break;
+				}
+				case 2: {
+					insertarInicio(inicio);
+					break;
+				}
+				case 3: {
+					insertarFinal(inicio);
+					break;
+				}
+				case 4: {
+					insertarOrdenado(inicio);
+					break;
+				}
+				case 5: {
+					borrar(inicio);
+					break;
+				}
+				case 6: {
+					buscar(inicio);
+					break;
+				}
+				case 7: {
+					borrarTodo(inicio);
+					break;
+				}
+				default: {
+					cout << "No has seleccionado ninguna opci" << char(162) << "n v" << char(160) << "lida." << endl << endl;
+					break;
+				}
+			}
+		} while(opcion < 1 ||opcion > 7);
+		cout << "\t--> CONTINUAR O SALIR <--" << endl;
+		cout << "\t=========================" << endl;
+		cout << "\t[1] - Continuar." << endl;
+		cout << "\t[2] - Salir." << endl << endl;
+		cout << "Opci" << char(162) << "n: ";
+		cin >> opcion;
+		cout << endl;
+	} while(opcion == 1);
 	
 	// Cierre
-	cout << "Pulsa Intro para terminar...";
+	cout << "Pulsa una tecla para terminar...";
 	cin.get();
 	return 0;
 }
 // Funciones secundarias
-void insertar_principio(struct nodo *&p) {
-	// Declaramos variable de estructura
+void mostrar(nodo *&p) {
+	// Creamos variable estructura actual
+	struct nodo *actual;
+	
+	// Actual pasa al puntero
+	actual = p;
+	
+	// Comprobamos lista
+	if(p != NULL) {
+		cout << "La lista no est" << char(160) << " vac" << char(161) << "a." << endl << endl;
+		// Mientras hayan números, se muestran
+		while(actual != NULL) {
+			cout << "- " << actual->numero << endl;
+			actual = actual->siguiente;
+		}
+		cout << endl;
+	} else {
+		cout << "La lista est" << char(160) << " vac" << char(161) << "a." << endl << endl;
+	}
+}
+void insertarInicio(nodo *&p) {
+	// Creamos variable estructura nuevo nodo
 	struct nodo *nuevo_nodo;
-	// Creamos nuevo nodo
+	
+	// Creamos estructura de nuevo nodo
 	nuevo_nodo = new struct nodo;
 	
-	// Solicitamos número
-	cout << "Introduce un valor : ";
+	// Solicitamos nuevo nodo
+	cout << "Introduce un nuevo valor: ";
 	cin >> nuevo_nodo->numero;
 	cout << endl;
 	
-	// Insertamos el nuevo nodo al principio de la lista
+	// Apuntamos al siguiente valor
 	nuevo_nodo->siguiente = p;
 	p = nuevo_nodo;
 }
-void insertar_final(struct nodo *&p) {
-	// Declaramos variable de estructura
+void insertarFinal(nodo *&p) {
+	// Creamos variable estructura nuevo nodo y auxiliar
 	struct nodo *nuevo_nodo;
-	
-	// Recorremos lista
 	struct nodo *aux;
 	
-	// Creamos nuevo nodo
+	// Creamos nueva estructura para nuevo nodo
 	nuevo_nodo = new struct nodo;
 	
-	// Solicitamos número
-	cout << "Introduce un valor: ";
+	// Solicitamos nuevo nodo
+	cout << "Introduce un valor final: ";
 	cin >> nuevo_nodo->numero;
 	cout << endl;
 	
-	// Insertamos el nuevo nodo al final de la lista
+	// Damos valor nulo a nuevo nodo siguiente
 	nuevo_nodo->siguiente = NULL;
+	
+	// Comprobamos si hay valor
 	if(p != NULL) {
+		// Aux coge el valor del puntero
 		aux = p;
+		// Mientras auxiliar siguiente siga teniendo un valor
 		while(aux->siguiente != NULL) {
+			// Pasamos al siguiente hasta encontrar el último lugar para posicionar el valor
 			aux = aux->siguiente;
 		}
+		// auxiliar siguiente coge el valor del nuevo nodo
 		aux->siguiente = nuevo_nodo;
 	} else {
+		// Si el puntero tiene valor nulo, el puntero coge el valor del nuevo nodo
 		p = nuevo_nodo;
 	}
 }
-void insertar_ordenado(struct nodo *&p) {
-	// Declaramos variable de estructura
-	struct nodo *nuevo_nodo;
-	struct nodo *anterior;
+void insertarOrdenado(nodo *&p) {
+	// Creamos variable estructura nuevo nodo, actual y anterior
+	struct nodo *nuevoNodo;
 	struct nodo *actual;
+	struct nodo *anterior;
 	
-	// Creamos nuevo nodo
-	nuevo_nodo = new struct nodo;
+	// Creamos nueva estructura para nuevo nodo
+	nuevoNodo = new struct nodo;
 	
-	// Solicitamos número
+	// Solicitamos nuevo nodo
 	cout << "Introduce un valor: ";
-	cin >> nuevo_nodo->numero;
+	cin >> nuevoNodo->numero;
 	cout << endl;
 	
-	// Insertamos el nuevo nodo al final de la lista
-	actual = principio;
+	// Damos valor inicial al actual nodo
+	actual = inicio;
 	
-	// Avanzamos en lista
-	while((actual != NULL) && (actual->numero < nuevo_nodo->numero)) {
-		// Anterior es actual
+	// Mientras que actual contenga un valor y sea menor su número que el número del nuevo nodo
+	while((actual != NULL) && (actual->numero < nuevoNodo->numero)) {
+		// Anterior coge el valor del nuevo nodo
 		anterior = actual;
-		// Actual es siguiente
+		// Actual coge el valor del valor siguiente actual
 		actual = actual->siguiente;
 	}
 	
-	// Condicional
+	// Si actual es igual al puntero
 	if(actual == p) {
-		nuevo_nodo->siguiente = p;
-		p = nuevo_nodo;
+		// El siguiente valor del nuevo nodo coge el valor del puntero
+		nuevoNodo->siguiente = p;
+		// El puntero coge el valor del nuevo nodo
+		p = nuevoNodo;
 	} else {
-		anterior->siguiente = nuevo_nodo;
-		nuevo_nodo->siguiente = actual;
+		// Sino, el valor siguiente del anterior coge el nuevo nodo
+		anterior->siguiente = nuevoNodo;
+		// El siguiente valor del nuevo nodo coge el valor del actual
+		nuevoNodo->siguiente = actual;
 	}
 }
 void borrar(struct nodo *&p) {
-	// Declaramos variable de estructura
-	struct nodo *anterior;
+	// Creamos variable estructura actual y anterior
 	struct nodo *actual;
+	struct nodo *anterior;
 	
 	// Declaramos variable
 	int numero;
 	
 	// Solicitamos número a eliminar
-	cout << "Escriba un numero: ";
+	cout << "Escriba un n" << char(163) << "mero a borrar: ";
 	cin >> numero;
 	cout << endl;
 	
-	// Borramos nodo
+	// Actual coge el valor del puntero
 	actual = p;
+	
+	// Mientras que actual tenga un valor y el nçumero de actual sea diferente del número
 	while((actual != NULL) && (actual->numero != numero)) {
+		// anterior coge el valor actual
 		anterior = actual;
+		// actual coge el valor siguiente de actual
 		actual = actual->siguiente;
 	}
+	
+	// Si actual contiene algún valor
 	if(actual != NULL) {
+		// si actual es igual al puntero
 		if(actual == p) {
+			// p coge el valor siguiente de actual
 			p = actual->siguiente;
+			// el valor siguiente de actual es nulo
 			actual->siguiente = NULL;
+			// se elimina actual
 			delete actual;
 		} else {
+			// el valor siguiente de anterir coge el valor siguiente de actal
 			anterior->siguiente = actual->siguiente;
+			// el valor siguiente de actual es nulo
 			actual->siguiente = NULL;
+			// se elimina actual
 			delete actual;
 		}
 	}
 }
 void buscar(struct nodo *&p) {
-	// Declaramos variable de estructura
+	// Creamos variable estructura actual
 	struct nodo *actual;
 	
 	// Declaramos variable
-	int encontrado = 0;
 	int numero;
+	int encontrado = 0;
 	
-	// Solicitamos búsqueda
-	cout << "Escribe un numero: ";
+	// Solicitamos número a buscar
+	cout << "Escriba un n" << char(163) << "mero a buscar: ";
 	cin >> numero;
+	cout << endl;
 	
-	// Buscamos nodo
+	// Actual coge el valor de p
 	actual = p;
+	
+	// Mientras actual contenga un valor y encontrado sea igual a 0
 	while((actual != NULL) && (encontrado == 0)) {
+		// si el número actual es igual al número
 		if(actual->numero == numero) {
+			// encontrado tendrá valor 1
 			encontrado = 1;
 		}
+		// actual coge el valor siguiente de actual
 		actual = actual->siguiente;
 	}
 	
-	// Resultado de búsqueda
+	// Si encontrado es igual a 1
 	if(encontrado == 1) {
-		cout << "El numero esta en la lista" << endl << endl;
+		// Se ha encontrado
+		cout << "El n" << char(163) << "mero est" << char(160) << " en la lista" << endl << endl;
 	} else {
-		cout << "El numero no se encuentra" << endl << endl;
+		// Sino, no se ha encontrado
+		cout << "El n" << char(163) << "mero no se encuentra" << endl << endl;
 	}
 }
-void mostrar(struct nodo *&p) {
-	// Declaramos variable de estructura
-	struct nodo *actual;
+void borrarTodo(struct nodo *&p) {
+	// Creamos variable estructura borrar todo
+	struct nodo *borrarTodo;
 	
-	// Actual apunta a p
-	actual = p;
-	
-	// Comprobar p
-	if(p == NULL) {
-		cout << "La lista se encuentra vacia." << endl << endl;
-	} else {
-		// Recorremos lista
-		while(actual != NULL) {
-			cout << actual->numero << ", ";
-			actual = actual->siguiente;
-		}
-	}
-	cout << endl << endl;
-}
-void borrar_todo(struct nodo *&p) {
-	// Nodo a borrar
-	struct nodo *nodo_a_borrar;
-	
-	// Buscamos
+	// Mientras p contenga algún valor
 	while(p != NULL) {
-		// Apuntamos al primer nodo
-		nodo_a_borrar = p;
-		// Apuntamos al siguiente nodo
+		// borrar todo coge el valor del puntero
+		borrarTodo = p;
+		// el siguiente valor de puntero coge el valor siguiente
 		p = p->siguiente;
-		nodo_a_borrar->siguiente = NULL;
-		delete nodo_a_borrar;
+		// el siguiente valor de borrar todo coge un valor nulo
+		borrarTodo->siguiente = NULL;
+		// borramos todo
+		delete borrarTodo;
+		// decimos que se ha eliminado todo
+		cout << "Se han eliminado todos los nodos" << endl << endl;
 	}
 }
