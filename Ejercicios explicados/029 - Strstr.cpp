@@ -15,6 +15,8 @@ int main() {
 	cout << "Escribe una frase: ";
 	gets(frase);
 	
+	cout << frase << endl;
+	
 	cout << "Ahora escribe una palabra: ";
 	gets(palabra);
 	
